@@ -13,8 +13,6 @@ final class CircleView: UIView {
     let circleMV = CircleViewModel()
     var screenTypeVar: ScreenType
 
-    // MARK: - Subviews
-
     // MARK: - Lifecycles
     init(frame: CGRect, screenType: ScreenType) {
         self.screenTypeVar = screenType
@@ -34,12 +32,10 @@ final class CircleView: UIView {
     }
 
     private func setupGestures() {
-        //        print("screenTypeVar:", screenTypeVar)
         let singleTap = UITapGestureRecognizer(target: self, action: #selector(didSingleTap))
         addGestureRecognizer(singleTap)
 
         if screenTypeVar == .swipe {
-            //            print("in swipe")
             let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(didSwipe))
             swipeUp.direction = .up
             let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(didSwipe))
@@ -49,12 +45,7 @@ final class CircleView: UIView {
             let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(didSwipe))
             swipeRight.direction = .right
             [swipeUp, swipeDown, swipeLeft, swipeRight].forEach { addGestureRecognizer($0) }
-            //            addGestureRecognizer(swipeUp)
-            //            addGestureRecognizer(swipeDown)
-            //            addGestureRecognizer(swipeLeft)
-            //            addGestureRecognizer(swipeRight)
         } else {
-            //            print("in pan")
             let panGesture = UIPanGestureRecognizer(target: self, action: #selector(didPan))
             addGestureRecognizer(panGesture)
         }
@@ -62,7 +53,6 @@ final class CircleView: UIView {
 
 
     @objc private func didPan(_ gesture: UIPanGestureRecognizer) {
-        //        print("Pan Gesture")
         guard let superview = self.superview else { return }
         let superBounds = superview.bounds
         let safeTop = superview.safeAreaInsets.top
@@ -78,21 +68,8 @@ final class CircleView: UIView {
         var newX = center.x + translation.x
         var newY = center.y + translation.y
         UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseInOut) {
-//            if newX + radius >= superBounds.maxX {
-//                newX = goodMaxX
-//            } else if newX - radius <= superBounds.minX {
-//                newX = goodMinX
-//            }
             newX = min(goodMaxX, max(goodMinX, newX))
-
-//            if newY + radius >= superBounds.maxY - safeBottom {
-//                newY = goodMaxY
-//            } else if newY - radius <= superBounds.minY + safeTop {
-//                newY = goodMinY
-//            }
-
             newY = min(goodMaxY, max(goodMinY, newY))
-
             self.center = CGPoint(x: newX, y: newY)
         }
         gesture.setTranslation(.zero, in: superview)
@@ -106,7 +83,6 @@ final class CircleView: UIView {
     }
 
     @objc private func didSingleTap(_ gesture: UITapGestureRecognizer) {
-        //        print("Single tap")
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut) {
             self.alpha = 0
         }
@@ -118,8 +94,8 @@ final class CircleView: UIView {
         let safeTop = superview.safeAreaInsets.top
         let safeBottom = superview.safeAreaInsets.bottom
         let radius = circleMV.circleRadius
-
         let moveStep: CGFloat = 100
+
         switch gesture.direction {
             case .up:
                 let newY = max(center.y - moveStep, radius)

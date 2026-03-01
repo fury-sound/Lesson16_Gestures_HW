@@ -25,17 +25,6 @@ final class CircleViewModel {
         }
     }
 
-    //    func calculateYMove(by value: CGFloat) -> CGFloat {
-    //        switch true {
-    //            case self.circleRadius + value < minY:
-    //                return minY - self.circleRadius
-    //            case self.circleRadius + value > maxY:
-    //                return maxY - self.circleRadius * 2
-    //            default:
-    //                return self.circleRadius + value
-    //        }
-    //    }
-
     func calculateX() -> CGFloat {
         switch true {
             case location.x - self.circleRadius < 0:
@@ -46,5 +35,4 @@ final class CircleViewModel {
                 return location.x - self.circleRadius
         }
     }
-
 }

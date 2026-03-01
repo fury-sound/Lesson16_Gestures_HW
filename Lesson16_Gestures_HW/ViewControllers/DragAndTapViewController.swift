@@ -10,7 +10,6 @@ import UIKit
 final class DragAndTapViewController: UIViewController {
 
     // MARK: - Properties
-    //    private let safeAreaInsets = view.safeAreaInsets
     private let constantY: CGFloat = 0
     private let constantX: CGFloat = 0
     private var circleRadius: CGFloat = 0
@@ -30,7 +29,6 @@ final class DragAndTapViewController: UIViewController {
     // MARK: - Lifecycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         setupViewProperties()
         setupSubviews()
         setupConstraints()
@@ -43,7 +41,6 @@ final class DragAndTapViewController: UIViewController {
 
     private func setupSubviews(){
         let safeAreaInsets = view.safeAreaInsets
-//        print("circleView.screenTypeVar", circleView.screenTypeVar)
         circleView.circleMV.minY = safeAreaInsets.top
         circleView.circleMV.maxY = view.frame.height - safeAreaInsets.bottom
         circleView.circleMV.screenFrame = view.frame
@@ -65,18 +62,11 @@ final class DragAndTapViewController: UIViewController {
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event!)
-//        print("VC tag:", self.tabBarItem.tag)
-//        print(circleView.circleMV.screenType)
-        //        print("touchesBegin")
         let safeAreaInsets = view.safeAreaInsets
-        //        let minY = safeAreaInsets.top
-        //        let maxY = view.frame.height - safeAreaInsets.bottom
-
         circleView.circleMV.minY = safeAreaInsets.top
         circleView.circleMV.maxY = view.frame.height - safeAreaInsets.bottom
         guard let touch = touches.first else { return }
         circleView.circleMV.location = touch.location(in: view)
-        //        let location = touch.location(in: view)
         if circleView.alpha == 0 {
             self.topConstraint?.constant = circleView.circleMV.calculateY()
             self.leadingConstraint?.constant = circleView.circleMV.calculateX()
@@ -86,7 +76,6 @@ final class DragAndTapViewController: UIViewController {
             }
         }
     }
-
 }
 
 #Preview {
